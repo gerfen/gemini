@@ -25,9 +25,13 @@ namespace Gemini.Modules.StatusBar.Views
 
         public void RefreshGridColumns()
         {
-            _statusBarGrid.ColumnDefinitions.Clear();
-            foreach (var item in StatusBar.Items.Cast<StatusBarItemViewModel>())
-                _statusBarGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = item.Width });
+
+            if (_statusBarGrid != null)
+            {
+                _statusBarGrid.ColumnDefinitions.Clear();
+                foreach (var item in StatusBar.Items.Cast<StatusBarItemViewModel>())
+                    _statusBarGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = item.Width });
+            }
         }
     }
 }
