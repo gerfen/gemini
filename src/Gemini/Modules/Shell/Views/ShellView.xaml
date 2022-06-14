@@ -14,8 +14,8 @@
 		<ResourceDictionary>
 			<converters:NullableValueConverter x:Key="NullableValueConverter" />
             <converters:TruncateMiddleConverter x:Key="TruncateMiddleConverter" />
-			<xcad:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
-            <DataTemplate x:Key="IconTitleTemplate" DataType="{x:Type xcad:LayoutContent}">
+			<BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+            <DataTemplate x:Key="IconTitleTemplate" DataType="{x:Type LayoutContent}">
                 <Grid VerticalAlignment="Center">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
@@ -41,7 +41,7 @@
 
 		<ContentControl DockPanel.Dock="Bottom" cal:View.Model="{Binding StatusBar}" IsTabStop="False" />
 
-        <xcad:DockingManager x:Name="Manager" DocumentsSource="{Binding Items}"
+        <DockingManager x:Name="Manager" DocumentsSource="{Binding Items}"
 							 AnchorablesSource="{Binding Tools}"
 							 ActiveContent="{Binding ActiveLayoutItem, Mode=TwoWay}"
                              LayoutUpdated="OnManagerLayoutUpdated"
@@ -49,7 +49,7 @@
                              AnchorableHeaderTemplate="{StaticResource IconTitleTemplate}"
                              DocumentTitleTemplate="{StaticResource IconTitleTemplate}"
                              AnchorableTitleTemplate="{StaticResource IconTitleTemplate}">
-            <xcad:DockingManager.LayoutItemTemplateSelector>
+            <DockingManager.LayoutItemTemplateSelector>
                 <controls:PanesTemplateSelector>
                     <controls:PanesTemplateSelector.DocumentTemplate>
                         <DataTemplate>
@@ -78,11 +78,11 @@
                         </DataTemplate>
                     </controls:PanesTemplateSelector.ToolTemplate>
                 </controls:PanesTemplateSelector>
-            </xcad:DockingManager.LayoutItemTemplateSelector>
-			<xcad:DockingManager.LayoutItemContainerStyleSelector>
+            </DockingManager.LayoutItemTemplateSelector>
+			<DockingManager.LayoutItemContainerStyleSelector>
 				<controls:PanesStyleSelector>
 					<controls:PanesStyleSelector.DocumentStyle>
-						<Style TargetType="{x:Type xcad:LayoutItem}">
+						<Style TargetType="{x:Type LayoutItem}">
 						    <Setter Property="ContentId" Value="{Binding Model.ContentId}" />
                             <Setter Property="Title" Value="{Binding Model.DisplayName, Mode=OneWay, Converter={StaticResource TruncateMiddleConverter}}" />
 							<Setter Property="CloseCommand" Value="{Binding Model.CloseCommand}" />
@@ -92,7 +92,7 @@
                         </Style>
 					</controls:PanesStyleSelector.DocumentStyle>
 					<controls:PanesStyleSelector.ToolStyle>
-						<Style TargetType="{x:Type xcad:LayoutAnchorableItem}">
+						<Style TargetType="{x:Type LayoutAnchorableItem}">
 							<Setter Property="ContentId" Value="{Binding Model.ContentId}" />
 							<Setter Property="Title" Value="{Binding Model.DisplayName, Mode=OneWay}" />
 							<Setter Property="CloseCommand" Value="{Binding Model.CloseCommand}" />
@@ -102,17 +102,17 @@
 						</Style>
 					</controls:PanesStyleSelector.ToolStyle>
 				</controls:PanesStyleSelector>
-			</xcad:DockingManager.LayoutItemContainerStyleSelector>
-            <xcad:DockingManager.LayoutUpdateStrategy>
+			</DockingManager.LayoutItemContainerStyleSelector>
+            <DockingManager.LayoutUpdateStrategy>
                 <controls:LayoutInitializer />
-            </xcad:DockingManager.LayoutUpdateStrategy>
-            <xcad:LayoutRoot>
-				<xcad:LayoutPanel x:Name="VerticalPanel" Orientation="Vertical">
-					<xcad:LayoutPanel x:Name="HorizontalPanel" Orientation="Horizontal">
-						<xcad:LayoutDocumentPane />
-					</xcad:LayoutPanel>
-				</xcad:LayoutPanel>
-			</xcad:LayoutRoot>
-		</xcad:DockingManager>
+            </DockingManager.LayoutUpdateStrategy>
+            <LayoutRoot>
+				<LayoutPanel x:Name="VerticalPanel" Orientation="Vertical">
+					<LayoutPanel x:Name="HorizontalPanel" Orientation="Horizontal">
+						<LayoutDocumentPane />
+					</LayoutPanel>
+				</LayoutPanel>
+			</LayoutRoot>
+		</DockingManager>
 	</DockPanel>
 </UserControl>

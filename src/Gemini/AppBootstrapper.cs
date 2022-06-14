@@ -11,6 +11,11 @@ using System.Threading;
 using System.Windows;
 using Caliburn.Micro;
 using Gemini.Framework.Services;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using Serilog;
+using Serilog.Events;
 
 namespace Gemini
 {
@@ -30,6 +35,9 @@ namespace Gemini
         /// </summary>
         public virtual bool IsPublishSingleFileHandled => false;
 
+        public static IHost Host { get; private set; }
+        protected ILogger<AppBootstrapper> Logger { get; private set; }
+
         public AppBootstrapper()
         {
             PreInitialize();
@@ -46,6 +54,45 @@ namespace Gemini
                 Thread.CurrentThread.CurrentUICulture = culture;
                 Thread.CurrentThread.CurrentCulture = culture;
             }
+
+            Host = Microsoft.Extensions.Hosting.Host.CreateDefaultBuilder()
+                .ConfigureServices((context, services) =>
+                {
+                    ConfigureServices(services);
+                })
+                .Build();
+
+            SetupLogging();
+        }
+
+        protected void ConfigureServices(IServiceCollection serviceCollection)
+        {
+           // FrameSet = serviceCollection.AddCaliburnMicro();
+            //serviceCollection.AddClearDashboardDataAccessLayer();
+            serviceCollection.AddLogging();
+            //serviceCollection.AddLocalization();
+        }
+
+        private void SetupLogging()
+        {
+
+            var fullPath = Path.Combine(Environment.CurrentDirectory, "Logs\\Gemini.log");
+            var level = LogEventLevel.Information;
+#if DEBUG
+            level = LogEventLevel.Verbose;
+#endif
+            const string outputTemplate = "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level}] [{SourceContext}] {Message}{NewLine}{Exception}";
+
+            var log = new LoggerConfiguration()
+                .MinimumLevel.Is(level)
+                .WriteTo.File(fullPath, outputTemplate: outputTemplate, rollingInterval: RollingInterval.Day)
+                .WriteTo.Debug(outputTemplate: outputTemplate)
+                .CreateLogger();
+
+            var loggerFactory = Host.Services.GetService<ILoggerFactory>();
+            loggerFactory.AddSerilog(log);
+
+            Logger = Host.Services.GetService<ILogger<AppBootstrapper>>();
         }
 
         /// <summary>
@@ -178,7 +225,19 @@ namespace Gemini
             var exports = Container.GetExports<object>(contract);
 
             if (exports.Any())
+            {
+
+
                 return exports.First().Value;
+            }
+            else
+            {
+                var service =  Host.Services.GetService(serviceType);
+                if (service != null)
+                {
+                    return service;
+                }
+            }
 
             throw new Exception(string.Format("Could not locate any instances of contract {0}.", contract));
         }

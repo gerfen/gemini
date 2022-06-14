@@ -7,7 +7,7 @@
                     xmlns:p="clr-namespace:Gemini.Modules.Inspector.Properties"
                     xmlns:gemini="http://schemas.timjones.io/gemini">
     <xctk:InverseBoolConverter x:Key="InverseBoolConverter" />
-    <xcad:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+    <BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
 
     <controls:InspectorItemTemplateSelector x:Key="InspectorItemTemplateSelector">
         <controls:InspectorItemTemplateSelector.LabelledTemplate>

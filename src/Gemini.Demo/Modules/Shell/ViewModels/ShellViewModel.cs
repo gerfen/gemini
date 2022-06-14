@@ -8,16 +8,23 @@ using Caliburn.Micro;
 using Gemini.Demo.Properties;
 using Gemini.Framework.Services;
 using Gemini.Modules.Shell.Views;
+using Microsoft.Extensions.Logging;
 
 namespace Gemini.Demo.Modules.Shell.ViewModels
 {
     [Export(typeof(IShell))]
     public class ShellViewModel : Gemini.Modules.Shell.ViewModels.ShellViewModel
     {
-        static ShellViewModel()
+        static ShellViewModel() 
         {
             ViewLocator.AddNamespaceMapping(typeof(ShellViewModel).Namespace, typeof(ShellView).Namespace);
         }
+
+        //[ImportingConstructor]
+        //public ShellViewModel(ILogger<Gemini.Modules.Shell.ViewModels.ShellViewModel> logger) : base(logger)
+        //{
+            
+        //}
 
         public override Task<bool> CanCloseAsync(CancellationToken cancellationToken)
         {

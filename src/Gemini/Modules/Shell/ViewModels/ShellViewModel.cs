@@ -15,6 +15,7 @@ using Gemini.Modules.Shell.Services;
 using Gemini.Modules.Shell.Views;
 using Gemini.Modules.StatusBar;
 using Gemini.Modules.ToolBars;
+using Microsoft.Extensions.Logging;
 
 namespace Gemini.Modules.Shell.ViewModels
 {
@@ -93,12 +94,26 @@ namespace Gemini.Modules.Shell.ViewModels
 
         public bool HasPersistedState => File.Exists(StateFile);
 
+        private ILogger<ShellViewModel> _logger { get; set; }
+
+
+        //[ImportingConstructor]
+        //public ShellViewModel(ILogger<ShellViewModel> logger)
+        //{
+        //    _logger = logger;
+        //    ((IActivate)this).ActivateAsync(CancellationToken.None).Wait();
+
+        //    _tools = new BindableCollection<ITool>();
+        //}
+
         public ShellViewModel()
         {
+         
             ((IActivate)this).ActivateAsync(CancellationToken.None).Wait();
 
             _tools = new BindableCollection<ITool>();
         }
+
 
         protected override void OnViewLoaded(object view)
         {

@@ -373,8 +373,8 @@
     </Style>
     <Style TargetType="Menu" BasedOn="{StaticResource StandardMenu}" />
     <Style TargetType="ContextMenu" BasedOn="{StaticResource MetroContextMenu}" />
-    <Style TargetType="xcad:ContextMenuEx" BasedOn="{StaticResource MetroContextMenu}" />
-    <Style TargetType="xcad:MenuItemEx" BasedOn="{StaticResource MetroMenuItem}">
+    <Style TargetType="ContextMenuEx" BasedOn="{StaticResource MetroContextMenu}" />
+    <Style TargetType="MenuItemEx" BasedOn="{StaticResource MetroMenuItem}">
         <Setter Property="HorizontalContentAlignment" Value="Left" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
     </Style>
