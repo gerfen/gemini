@@ -16,13 +16,30 @@
 		<Grid.Background>
 			<SolidColorBrush Color="{Binding Background, FallbackValue=White}" />
 		</Grid.Background>
-		<TextBlock Grid.Column="0" TextAlignment="{Binding TextAlignment, FallbackValue=Center}"
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+		<!--<TextBlock Grid.Column="0" TextAlignment="{Binding TextAlignment, FallbackValue=Center}"
 				   VerticalAlignment="Center"
 				   FontSize="24"
 				   Text="{Binding Text}">
 			<TextBlock.Foreground>
 				<SolidColorBrush Color="{Binding Foreground, FallbackValue=Black}" />
 			</TextBlock.Foreground>
-		</TextBlock>
+		</TextBlock>-->
+        <StackPanel Grid.Row="0">
+            <Button x:Name="AddShape" Content="Add Shape" Width="100" Height="25" Margin="5"></Button>
+        </StackPanel>
+        <Canvas Grid.Row="1" x:Name="DesignSurface">
+            <Border Canvas.Left="10" 
+                    Canvas.Top="10" 
+                    Height="75" 
+                    Width="150" 
+                    Background="Blue"
+                    CornerRadius="5">
+                <TextBlock Text="From View" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+            </Border>
+        </Canvas>
 	</Grid>
 </UserControl>

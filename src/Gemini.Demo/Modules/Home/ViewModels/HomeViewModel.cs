@@ -1,9 +1,11 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using System.ComponentModel.Composition;
 using System.IO;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
+using Gemini.Demo.Modules.Home.Views;
 using Gemini.Framework;
 
 namespace Gemini.Demo.Modules.Home.ViewModels
@@ -176,5 +178,82 @@ namespace Gemini.Demo.Modules.Home.ViewModels
             // load TextAlignment as a string
             TextAlignment = (TextAlignment)Enum.Parse(typeof(TextAlignment), reader.ReadString());
         }
-	}
+
+
+        private Canvas DesignSurface { get; set; }
+        protected override void OnViewLoaded(object view)
+        {
+            base.OnViewLoaded(view);
+
+            var homeView = (HomeView)view;
+
+            DesignSurface = (Canvas)homeView.FindName("DesignSurface");
+
+
+            var border = new Border
+            {
+                Height = 75,
+                Width = 150,
+                Background = Brushes.DarkOrange,
+                CornerRadius = new CornerRadius(5)
+            };
+
+            var textBlock = new TextBlock
+            {
+                Text = "From ViewModel",
+                FontSize = 20,
+                VerticalAlignment = VerticalAlignment.Center,
+                HorizontalAlignment = HorizontalAlignment.Center
+
+            };
+
+            border.Child = textBlock;
+
+
+            Canvas.SetTop(border, 95.0);
+            Canvas.SetLeft(border, 10.0);
+
+            DesignSurface.Children.Add(border);
+
+
+        }
+
+        protected override void OnViewAttached(object view, object context)
+        {
+            base.OnViewAttached(view, context);
+        }
+
+        protected override void OnViewReady(object view)
+        {
+            base.OnViewReady(view);
+        }
+
+        public void AddShape()
+        {
+            var border = new Border
+            {
+                Height = 75,
+                Width = 150,
+                Background = Brushes.DarkGreen,
+                CornerRadius = new CornerRadius(5)
+            };
+
+            var textBlock = new TextBlock
+            {
+                Text = "From AddShape",
+                FontSize = 20,
+                VerticalAlignment = VerticalAlignment.Center,
+                HorizontalAlignment = HorizontalAlignment.Center
+
+            };
+
+            border.Child = textBlock;
+
+
+            Canvas.SetTop(border, 180.0);
+            Canvas.SetLeft(border, 10.0);
+
+            DesignSurface.Children.Add(border);
+        }
+    }
 }
